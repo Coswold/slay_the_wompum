@@ -494,7 +494,7 @@ function randomTraps () {
 
 function start () {
 	rl.question('Do you accept? [Yes/No]: ', (answer) => {
-		if (answer == 'Yes' || answer == 'yes' || 'y') {
+		if (answer == 'Yes' || answer == 'yes' || answer == 'y') {
 			rooms[currentPositionX][currentPositionY] = hero;
 			randomTraps();
 			placeWompum();
@@ -507,7 +507,7 @@ function start () {
 					moveHero();
 				}
 			});
-		} else if (answer == 'No' || answer == 'no' || 'n') {
+		} else if (answer == 'No' || answer == 'no' || answer == 'n') {
 			rl.close();
 			return;
 		} else {
