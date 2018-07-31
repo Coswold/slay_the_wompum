@@ -34,6 +34,7 @@ var lastPositionY;
 var word = 0;
 var dialogue = 0;
 var axe = 5;
+var dead = 0;
 var traps = [portal, zombieOwl, pillar, acidTrap];
 rooms[currentPositionX][currentPositionY] = hero;
 
@@ -272,12 +273,16 @@ function checkMove () {
 			axe--;
 			printBoard();
 			console.log('\x1b[32m%s\x1b[0m', 'Acid sprayed out of the floor! My face is melting!\nAlso, one of my axes dissolved.');
+			return (0);
 		} else {
 			printBoard();
 			console.log('\x1b[32m%s\x1b[0m', 'Oooohh, my legs are puddles of goo.\nGuess I\'ll just crawl around.');
+			return (0);
 		}
 		return (0);
 	} else if (rooms[currentPositionX][currentPositionY] == wompum) {
+		dead++;
+		gameOver();
 		return (2);
 	} else {
 		return (1);
@@ -410,11 +415,11 @@ function moveHero () {
 				rooms[lastPositionX][lastPositionY] = litRoom;
 				printBoard();
 				moveHero();
-			} else if (checkMove() == 2) { 
-				gameOver();
 			} else {
 				currentPositionX++;
-				moveHero();
+				if (dead === 0) {
+					moveHero();
+				}
 			}
 		} else if (answer == 's') {
 			currentPositionX++;
@@ -423,11 +428,11 @@ function moveHero () {
 				rooms[lastPositionX][lastPositionY] = litRoom;
 				printBoard();
 				moveHero();
-			} else if (checkMove() == 2) {
-				gameOver();
 			} else {
 				currentPositionX--;
-				moveHero();
+				if (dead === 0) {
+					moveHero();
+				}
 			}
 		} else if (answer == 'a') {
 			currentPositionY--;
@@ -436,11 +441,11 @@ function moveHero () {
 				rooms[lastPositionX][lastPositionY] = litRoom;
 				printBoard();
 				moveHero();
-			} else if (checkMove() == 2) {
-				gameOver();
 			} else {
 				currentPositionY++;
-				moveHero();
+				if (dead === 0) {
+					moveHero();
+				}
 			}
 		} else if (answer == 'd') {
 			currentPositionY++;
@@ -449,11 +454,11 @@ function moveHero () {
 				rooms[lastPositionX][lastPositionY] = litRoom;
 				printBoard();
 				moveHero();
-			} else if (checkMove() == 2) {
-				gameOver();
 			} else {
 				currentPositionY--;
-				moveHero();
+				if (dead === 0) {
+					moveHero();
+				}
 			}
 		} else if (answer == 'help' || answer == 'h') {
 			helpMenu();
