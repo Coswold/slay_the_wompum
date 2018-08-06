@@ -211,9 +211,15 @@ function gameOver () {
 	clear ();
 	printTitle();
 	console.log('\x1b[34m%s\x1b[0m', '*/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/*');
-	console.log('\n\n\n\n\n\n\n\n');
+	console.log('\n\n\n');
+	console.log('\x1b[33m%s\x1b[0m', '              (\\_________/) ');
+	console.log('\x1b[33m%s\x1b[0m', '              /           \\ ');
+	console.log('             \x1b[33m|  \x1b[31m@       @  \x1b[33m|');
+	console.log('             |    /^ ^\\    |');
+	console.log('        <^^> |    \x1b[35m^v^v^\x1b[0m    \x1b[33m| <^^>');
+	console.log('          \x1b[33m\\\\ |     \x1b[35m^v^\x1b[0m     \x1b[33m| //\x1b[0m\n');
 	console.log('\x1b[31m%s\x1b[0m', '                GAME OVER');
-	console.log('\n\n\n\n\n\n\n\n');
+	console.log('\n\n\n\n\n\n');
 	console.log('\x1b[34m%s\x1b[0m', '*/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/*');
 	rl.question('The wompum ate your arms and legs and put the rest in the freezer.\nShould we send another knight in? [y/n] ', (answer) => {
 		if (answer == 'y') {
@@ -477,11 +483,14 @@ function moveHero () {
 	});
 }
 
+var wompumX;
+var wompumY;
+
 function placeWompum () {
-	var x = Math.floor(Math.random() * 10);
-	var y = Math.floor(Math.random() * 10);
-	if (rooms[x][y] == ' ') {
-		rooms[x][y] = wompum;
+	wompumX = Math.floor(Math.random() * 10);
+	wompumY = Math.floor(Math.random() * 10);
+	if (rooms[wompumX][wompumY] == ' ') {
+		rooms[wompumX][wompumY] = wompum;
 	} else {
 		placeWompum();
 	}
@@ -497,12 +506,40 @@ function randomTraps () {
 	}
 }
 
+function createPath () {
+	var pathX = currentPositionX;
+	var pathY = currentPositionY;
+
+	while (pathX > wompumX) {
+		pathX--;
+		rooms[pathX][pathY] = 'p';
+	} while (pathY > wompumY + 1) { 
+		pathY--;
+		rooms[pathX][pathY] = 'p';
+	} while (pathY < wompumY - 1) {
+		pathY++;
+		rooms[pathX][pathY] = 'p';
+	}
+}
+
+function clearPath () {
+	for (var i = 0; i < rooms.length; i++) {
+		for (var j = 0; j < rooms[i].length; j++) {
+			if (rooms[i][j] == 'p') {
+				rooms[i][j] = ' ';
+			}
+		}
+	}
+}
+
 function start () {
 	rl.question('Do you accept? [Yes/No]: ', (answer) => {
 		if (answer == 'Yes' || answer == 'yes' || answer == 'y') {
 			rooms[currentPositionX][currentPositionY] = hero;
-			randomTraps();
 			placeWompum();
+			createPath();
+			randomTraps();
+			clearPath();
 			printBoard();
 			rl.question('Do you want to know how to slay the wompum? [y/n] ', (answer) => {
 				if (answer == 'y' || answer == 'yes') {
