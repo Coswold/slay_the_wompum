@@ -4,7 +4,7 @@ This is a simple command line game based off of the classic Hunt the Wumpus. I c
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
 ### Prerequisites
 
@@ -31,13 +31,9 @@ Play in your terminal
 node stw.js
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
-
 ## Authors
 
 * **Connor Oswold** - *Initial work* - [Coswold](https://github.com/Coswold)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
 ## Acknowledgments
 
